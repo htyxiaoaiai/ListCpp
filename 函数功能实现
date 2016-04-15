@@ -1,0 +1,521 @@
+# ListCpp
+c++实现
+#include "List.h"
+
+ostream& operator<<(ostream& os, const List& l)
+{
+	Node* cur = l._head;
+	while (cur)
+	{
+		os << cur->_data << "->";
+		cur = cur->_next;
+	}
+	os << "over";
+	return os;
+}
+
+void List::PushBack(const DataType& d)
+{
+	Node* newNode = new Node(d);
+	if (_head == NULL)//无节点
+	{
+		_head = newNode;
+		_tail = _head;
+	}
+	else//多个节点
+	{
+		_tail->_next = newNode;
+		_tail = newNode;
+	}
+}
+
+void  List::PushFront(const DataType& d)
+{
+	Node* newNode = new Node(d);
+	if (_head == NULL)//无节点
+	{
+		_head = newNode;
+		_tail = _head;
+		return;
+	}
+	newNode->_next = _head;
+	_head = newNode;
+}
+
+void  List::PopBack()
+{
+	if (_head == NULL)//无节点
+	{
+		return;
+	}
+	if (_head == _tail)//一个节点
+	{
+		delete _head;
+		_head = NULL;
+		_tail = NULL;
+		return;
+	}
+	//多个节点
+	Node* cur = _head;
+	while (cur->_next != _tail)
+	{
+		cur = cur->_next;
+	}
+	delete _tail;
+	_tail = cur;
+	_tail->_next = NULL;
+}
+
+void  List::PopFront()
+{
+	if (_head == NULL)//无节点
+	{
+		return;
+	}
+	if (_head == _tail)//一个结点
+	{
+		delete _head;
+		_head = NULL;
+		_tail = _head;
+		return;
+	}
+	//多个节点
+	Node* del = _head;
+	_head = _head->_next;
+	delete del;
+}
+
+Node* List::Find(const DataType& d)
+{
+	Node* cur = _head;
+	while (cur)
+	{
+		if (cur->_data == d)
+		{
+			return cur;
+		}
+		cur = cur->_next;
+	}
+	return NULL;
+}
+
+void  List::Insert(Node* pos, const DataType& d)
+{
+	Node* newNode = new Node(d);
+	if (pos != _tail)//非尾节点插入
+	{
+		newNode->_next = pos->_next;
+		pos->_next = newNode;
+	}
+	else//尾节点插入
+	{
+		_tail->_next = newNode;
+		_tail = newNode;
+	}
+}
+
+int  List::GetListLength()
+{
+	int count = 0;
+	Node* cur = _head;
+	while (cur)
+	{
+		count++;
+		cur = cur->_next;
+	}
+	return count;
+}
+
+void  List::Remove(const DataType& d)
+{
+	if (_head == NULL)//无节点
+	{
+		return;
+	}
+	Node* cur = _head;
+	while (cur)
+	{
+		if (cur->_data == d)
+		{
+			if (cur == _head)//第一个相等
+			{
+				PopFront();
+				return;
+			}
+			else if (cur == _tail&& cur != _head)//最后一个节点相等
+			{
+				PopBack();
+				return;
+			}
+			else//其他节点
+			{
+				Node* now = _head;
+				while (now->_next != cur)
+				{
+					now = now->_next;
+				}
+				now->_next = cur->_next;
+				delete cur;
+				return;
+			}
+		}
+		cur = cur->_next;
+	}
+}
+
+void  List::RemoveAll(const DataType& d)
+{
+	Node* cur = _head;
+	bool flag = true;
+	while (cur)
+	{
+		flag = true;
+		if (cur->_data == d)
+		{
+			flag = false;
+			cur = cur->_next;
+			Remove(d);
+		}
+		if (flag)
+		{
+			cur = cur->_next;
+		}
+	}
+}
+
+void  List::Erase(Node* pos)
+{
+	if (pos == NULL)//
+	{
+		return;
+	}
+	if (pos == _head)//删除第一个节点
+	{
+		PopFront();
+		return;
+	}
+	if (pos == _tail && pos!=_head)//删除最后一个节点
+	{
+		PopBack();
+		return;
+	}
+
+	//非尾节点的删除
+	Node* del = pos->_next;
+	DataType tmp = pos->_data;
+	pos->_data = pos->_next->_data;
+	pos->_next->_data = tmp;
+
+	pos->_next = pos->_next->_next;
+	delete del;
+}
+
+void  List::EraseNotTail(Node* pos)
+{
+	Node* del = pos->_next;
+	//将删除的节点与后一个节点交换并删除后一个节点
+	DataType tmp = pos->_data;
+	pos->_data = pos->_next->_data;
+	pos->_next->_data = tmp;
+
+	pos->_next = pos->_next->_next;
+
+}
+
+void  List::ReverseList()
+{
+	Node* cur = _head;
+	Node* prev = NULL;
+	Node* newHead = NULL;
+	while (cur)
+	{
+		prev = cur;
+		cur = cur->_next;
+		prev->_next = newHead;
+		newHead = prev;
+	}
+	_tail = _head;
+	_head = newHead;
+
+}
+
+void  List::BubbleSort()
+{
+	Node* cur = _head;
+	Node* end = NULL;
+	bool flag = true;
+	while (cur && cur->_next != end && flag)//排序的轮数
+	{
+		flag = false;
+		while (cur && cur->_next != end)//交换的次数
+		{
+			if (cur->_data > cur->_next->_data)
+			{
+				flag = true;
+				DataType tmp = cur->_data;
+				cur->_data = cur->_next->_data;
+				cur->_next->_data = tmp;
+			}
+			cur = cur->_next;
+		}
+		end = cur;
+		cur = _head;
+	}
+}
+
+void  List::InsertFrontNode(Node* pos, const DataType& d)
+{
+	Node* newNode = new Node(d);
+	if (pos == NULL)
+	{
+		_head = newNode;
+		_tail = _head;
+		return;
+	}
+	if (pos == _tail)
+	{
+		_tail->_next = newNode;
+		_tail = newNode;
+	}
+	else
+	{
+		newNode->_next = pos->_next;
+		pos->_next = newNode;
+	}
+
+	DataType tmp = pos->_data;
+	pos->_data = pos->_next->_data;
+	pos->_next->_data = tmp;
+}
+
+Node*  List::FindMidNode()
+{
+	Node* slow = _head;
+	Node* fast = _head;
+	while (fast && fast->_next && fast->_next->_next)
+	{
+		slow = slow->_next;
+		fast = fast->_next->_next;
+	}
+	return slow;
+}
+
+void  List::DelKNode(int k)
+{
+	int length = GetListLength();
+	if (k > 0 && k <= length)//判断参数的正确性
+	{
+		if (k == length)//删除第一个结点
+		{
+			PopFront();
+			return;
+		}
+		if (k == 1)//删除最后一个节点
+		{
+			PopBack();
+			return;
+		}
+
+		Node* fast = _head;
+		Node* slow = _head;
+		while (k--)
+		{
+			fast = fast->_next;
+		}
+		while (fast)
+		{
+			slow = slow->_next;
+			fast = fast->_next;
+		}
+		//数据交换
+		DataType tmp = slow->_data;
+		slow->_data = slow->_next->_data;
+		slow->_next->_data = tmp;
+
+		Node* del = slow->_next;
+		slow->_next = del->_next;
+		delete del;
+	}
+}
+
+Node*  List::CheckCycle()
+{
+	Node* slow = _head;
+	Node* fast = _head;
+	while (fast && fast->_next)
+	{
+		slow = slow->_next;
+		fast = fast->_next->_next;
+		if (fast == slow)
+		{
+			return slow;//有环
+		}
+	}
+	return NULL;//无环
+}
+
+int  List::GetCircleLength(Node* meet)
+{
+	Node* start = meet;
+	Node* end = meet;
+	int count = 0;
+	do
+	{
+		start = start->_next;
+		count++;
+	} while (start != end);
+	return count;
+}
+Node*  List::GetCycleEntryNode(Node* meetNode)
+{
+	Node* start = _head;
+	Node* end = meetNode;
+	while (start != end)
+	{
+		start = start->_next;
+		end = end->_next;
+	}
+
+	return start;
+}
+
+//Node*  List::GetCycleEntryNode(Node* meetNode)
+//{
+//	Node *l1 = _head;
+//	Node *l2 = meetNode->_next;//从相遇节点的下一个节点开始
+//	meetNode->_next = NULL;//将两条单链表的尾节点的_next域赋为空
+//	Node *Enter = GetCrossNode(l1, l2);//将单链表拆分成两条并找交点
+//	meetNode->_next = l2;//将原始的单链表恢复
+//	return Enter;
+//}
+
+
+List& Merge(List& l1, List& l2)
+{
+	if (l1._head == l2._head)//相等
+	{
+		return l1;
+	}
+	if (l1._head == NULL&&l2._head != NULL)
+	{
+		return l2;
+	}
+	if (l2._head == NULL&&l1._head != NULL)
+	{
+		return l1;
+	}
+
+	Node* list1 = l1._head;
+	Node* list2 = l2._head;
+	Node* newHead = NULL;
+	//找到头指针
+	if (list1->_data < list2->_data)
+	{
+		newHead = list1;
+		list1 = list1->_next;
+		newHead->_next = NULL;
+	}
+	else
+	{
+		newHead = list2;
+		list2 = list2->_next;
+		newHead->_next = NULL;
+	}
+	Node* cur = newHead;
+	while (list1&&list2)
+	{
+		if (list1->_data < list2->_data)
+		{
+			cur->_next = list1;
+			list1 = list1->_next;
+		}
+		else
+		{
+			cur->_next = list2;
+			list2 = list2->_next;
+		}
+		cur = cur->_next;
+	}
+	if (list1 == NULL)
+	{
+		cur->_next = list2;
+		l2._head = newHead;
+		l1._head = NULL;
+		l1._tail = NULL;
+		return l2;
+	}
+	//list2为空
+	cur->_next = list1;
+	l1._head = newHead;
+	l2._head = NULL;
+	l2._tail = NULL;
+	return l1;
+
+}
+
+bool CheckCross(const List& list1, const List& list2)
+{
+	Node* l1 = list1._head;
+	Node* l2 = list2._head;
+	while (l1->_next)
+	{
+		l1 = l1->_next;
+	}
+	while (l2->_next)
+	{
+		l2 = l2->_next;
+	}
+	if (l1 == l2)
+	{
+		return true;
+	}
+	return false;
+}
+
+Node* GetCrossNode(List& list1, List& list2)
+{
+	int length1 = list1.GetListLength();
+	int length2 = list2.GetListLength();
+	int diff = 0;
+	Node* slow = NULL;
+	Node* fast = NULL;
+	if (length1 > length2)
+	{
+		diff = length1 - length2;
+		fast = list1._head;
+		slow = list2._head;
+		while (diff--)
+		{
+			fast = fast->_next;
+		}
+		while (fast&&slow)
+		{
+			if (fast == slow)
+			{
+				return slow;
+			}
+			fast = fast->_next;
+			slow = slow->_next;
+		}
+	}
+	else
+	{
+		diff = length1 - length2;
+		fast = list2._head;
+		slow = list1._head;
+		while (diff--)
+		{
+			fast = fast->_next;
+		}
+		while (fast&&slow)
+		{
+			if (fast == slow)
+			{
+				return slow;
+			}
+			fast = fast->_next;
+			slow = slow->_next;
+		}
+	}
+	return NULL;
+}
