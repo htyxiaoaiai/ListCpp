@@ -1,0 +1,95 @@
+# ListCpp
+c++实现
+#pragma once
+#include <iostream>
+using namespace std;
+typedef int DataType;
+
+struct Node
+{
+public:
+	Node(const DataType& d)
+		:_data(d)
+		,_next(NULL)
+	{}
+public:
+	DataType _data;
+	Node* _next;
+};
+
+class List
+{
+	friend ostream& operator<<(ostream& os, const List& l);
+	friend List& Merge(List& l1, List& l2);
+	friend bool CheckCross(const List& list1, const List& list2);
+	friend Node* GetCrossNode(List& list1, List& list2);
+public:
+	List()
+		:_head(NULL)
+		,_tail(NULL)
+	{}
+
+	List(const List& l)
+	{
+		if (l._head == NULL)
+		{
+			return;
+		}
+		Node* cur = l._head;
+		Node* newNode = new Node(l._head->_data);
+		_head = newNode;
+		_tail = _head;
+		cur = cur->_next;
+		while (cur)
+		{
+			newNode = new Node(cur->_data);
+			_tail->_next = newNode;
+			_tail = newNode;
+			cur = cur->_next;
+		}
+	}
+
+	List& operator=(List l)
+	{
+		swap(_head, l._head);
+		swap(_tail, l._tail);
+		return *this;
+	}
+
+	~List()
+	{
+		Node* cur = _head;
+		while (cur && cur!=_tail)
+		{
+			Node* del = cur;
+			cur = cur->_next;
+			delete del;
+		}
+		delete _tail;//如果存在环的情况下环入口点会析构两次
+		_head = NULL;
+		_tail = NULL;
+	}
+public:
+	void PushBack(const DataType& d);
+	void PushFront(const DataType& d);
+	void PopBack();
+	void PopFront();
+	Node* Find(const DataType& d);
+	void Insert(Node* pos, const DataType& d);
+	int GetListLength();
+	void Remove(const DataType& d);
+	void RemoveAll(const DataType& d);
+	void Erase(Node* pos);
+	void EraseNotTail(Node* pos);
+	void ReverseList();
+	void BubbleSort();
+	void InsertFrontNode(Node* pos, const DataType& d);
+	Node* FindMidNode();
+	void DelKNode(int k);
+	Node* CheckCycle();
+	int GetCircleLength(Node* meet);
+	Node* GetCycleEntryNode(Node* meetNode);
+private:
+	Node* _head;
+	Node* _tail;
+};
