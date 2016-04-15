@@ -1,0 +1,235 @@
+# ListCpp
+c++实现
+#include "List.h"
+
+void test1()
+{
+	List l1;
+	/*l1.PushBack(1);
+	l1.PushBack(2);
+	l1.PushBack(3);
+	l1.PushBack(4);
+	l1.PushBack(5);*/
+	l1.PushFront(1);
+	l1.PushFront(2);
+	l1.PushFront(3);
+	l1.PushFront(4);
+	l1.PushFront(5);
+	cout << l1 << endl;
+	l1.PopFront();
+	cout << l1 << endl;
+	l1.PopFront();
+	cout << l1 << endl;
+	l1.PopFront();
+	cout << l1 << endl;
+	l1.PopFront();
+	cout << l1 << endl;
+	l1.PopFront();
+	cout << l1 << endl;
+	l1.PopFront();
+	cout << l1 << endl;
+	l1.PopFront();
+	cout << l1 << endl;
+}
+void test2()
+{
+	List l1;
+	l1.PushFront(1);
+	l1.PushFront(2);
+	l1.PushFront(3);
+	l1.PushFront(4);
+	l1.PushFront(5);
+	l1.PushFront(1);
+	l1.PushFront(2);
+	l1.PushFront(3);
+	l1.PushFront(4);
+	cout << l1 << endl;
+	l1.Erase(l1.Find(1));
+	l1.Erase(l1.Find(2));
+	l1.Erase(l1.Find(3));
+	l1.Erase(l1.Find(4));
+	l1.Erase(l1.Find(5));
+	cout << l1 << endl;
+	l1.Erase(l1.Find(1));
+	l1.Erase(l1.Find(2));
+	l1.Erase(l1.Find(3));
+	l1.Erase(l1.Find(4));
+	l1.Erase(l1.Find(5));
+	cout << l1 << endl;
+	l1.Erase(l1.Find(1));
+	l1.Erase(l1.Find(2));
+	l1.Erase(l1.Find(3));
+	l1.Erase(l1.Find(4));
+	l1.Erase(l1.Find(5));
+	cout << l1 << endl;
+	//l1.RemoveAll(1);
+	//cout << l1 << endl;
+	//l1.RemoveAll(2);
+	//cout << l1 << endl;
+	//l1.RemoveAll(3);
+	//cout << l1 << endl;
+	//l1.RemoveAll(4);
+	//cout << l1 << endl;
+	/*l1.RemoveAll(5);*/
+	/*cout << l1.GetListLength() << endl;*/
+	/*l1.Insert(l1.Find(3), 6);
+	cout << l1 << endl;
+	cout << l1.GetListLength() << endl;*/
+}
+
+void test3()
+{
+	List l1;
+	l1.PushFront(1);
+	l1.PushFront(2);
+	l1.PushFront(3);
+	l1.PushFront(4);
+	l1.PushFront(5);
+	cout << l1 << endl;
+	l1.BubbleSort();
+	cout << l1 << endl;
+	l1.BubbleSort();
+	cout << l1 << endl;
+	//l1.ReverseList();
+	//l1.Erase(l1.Find(5));
+	//cout << l1 << endl;
+	//l1.Erase(l1.Find(4));
+	//cout << l1 << endl;
+	//l1.Erase(l1.Find(3));
+	//cout << l1 << endl;
+	//l1.Erase(l1.Find(2));
+	//cout << l1 << endl;
+	//l1.Erase(l1.Find(5));
+	//cout << l1 << endl;
+}
+void test4()
+{
+	List l1;
+	l1.PushBack(1);
+	l1.PushBack(2);
+	l1.PushBack(3);
+	l1.PushBack(4);
+	l1.PushBack(5);
+	cout << l1 << endl;
+	l1.DelKNode(0);
+	cout << l1 << endl;
+	//cout << l1.FindMidNode()->_data << endl;
+	//l1.InsertFrontNode(l1.Find(5),6);
+	//cout << l1 << endl;
+	//cout << l1.FindMidNode()->_data << endl;
+	//l1.InsertFrontNode(l1.Find(1), 7);
+	//cout << l1.FindMidNode()->_data << endl;
+	//cout << l1 << endl;
+	//l1.InsertFrontNode(l1.Find(3), 8);
+	//cout << l1 << endl;
+}
+void test5()
+{
+	List l1;
+	l1.PushBack(1);
+	l1.PushBack(2);
+	l1.PushBack(3);
+	l1.PushBack(4);
+	l1.PushBack(5);
+	l1.PushBack(6);
+	l1.PushBack(7);
+	l1.PushBack(8);
+	l1.PushBack(9);
+	l1.Find(9)->_next = l1.Find(5);
+	/*cout << l1.CheckCycle() << endl;
+	cout << l1.GetCircleLength(l1.CheckCycle()) << endl;*/
+	cout << l1.GetCycleEntryNode(l1.CheckCycle()) << endl;
+	cout << l1.Find(5) << endl;
+}
+void test6()
+{
+	List l1;
+	List l2;
+	l1.PushBack(1);
+	l2.PushBack(2);
+	l1.PushBack(3);
+	l2.PushBack(4);
+	l1.PushBack(5);
+	l1.PushBack(6);
+	l2.PushBack(7);
+	l1.PushBack(8);
+	l2.PushBack(9);
+	cout << Merge(l1, l2);
+
+}
+void test7()
+{
+	List l1;
+	l1.PushBack(1);
+	l1.PushBack(2);
+	l1.PushBack(3);
+	l1.PushBack(4);
+	l1.PushBack(5);
+	l1.PushBack(6);
+	l1.PushBack(7);
+	l1.PushBack(8);
+	l1.PushBack(9);
+	cout << l1 << endl;
+	List l2;
+	l2.PushBack(1);
+	l2.PushBack(2);
+	l2.PushBack(3);
+	l2.PushBack(4);
+	l2.Find(4)->_next = l1.Find(5);
+	cout << l2 << endl;
+	cout << CheckCross(l1, l2) << endl;
+	cout << GetCrossNode(l1, l2)->_data << endl;
+}
+void test8()
+{
+	List l1;
+	l1.PushBack(1);
+	l1.PushBack(2);
+	l1.PushBack(3);
+	l1.PushBack(4);
+	cout << l1 << endl;
+	List l2(l1);
+	cout << l2 << endl;
+	List l3;
+	l3 = l2;
+	l3.Remove(3);
+	cout << l3 << endl;
+}
+void test9()
+{
+	List l1;
+	l1.PushFront(1);
+	l1.PushFront(2);
+	l1.PushFront(3);
+	l1.PushFront(4);
+	l1.PushFront(5);
+	l1.PushFront(1);
+	l1.PushFront(2);
+	l1.PushFront(3);
+	l1.PushFront(4);
+	cout << l1 << endl;
+	l1.RemoveAll(5);
+	cout << l1 << endl;
+	l1.RemoveAll(4);
+	cout << l1 << endl;
+	l1.RemoveAll(3);
+	cout << l1 << endl;
+	l1.RemoveAll(2);
+	cout << l1 << endl;
+	l1.RemoveAll(1);
+	cout << l1 << endl;
+}
+int main()
+{
+	//test1();
+	//test2();
+	//test3();
+	//test4();
+	//test5();
+	//test6();
+	//test7();
+	//test8();
+	test9();
+	getchar();
+	return 0;
+}
